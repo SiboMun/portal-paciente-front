@@ -1,0 +1,306 @@
+<div class="min-h-screen w-full bg-cover bg-center flex flex-col">
+
+    <!-- Header -->
+    <header
+        class="w-full p-4 lg:px-12 flex flex-col lg:flex-row items-center justify-between relative bg-[#073763] shrink-0">
+
+        <div class="flex items-center gap-2 mb-4 lg:mb-0">
+            <img src="https://portalpaciente.hospitalsoterodelrio.cl/static/img/portalpaciente2.png"
+                alt="Logo izquierdo" class="h-12 lg:h-16 border-r-2 border-white pr-2 mr-4">
+            <svg xmlns="http://www.w3.org/2000/svg" height="40" width="40" viewBox="0 0 448 512"
+                class="lg:h-[62px] lg:w-[62px]"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path fill="#ffffff"
+                    d="M224 248a120 120 0 1 1 0-240 120 120 0 1 1 0 240zm-30.5 56l61 0c9.7 0 17.5 7.8 17.5 17.5 0 4.2-1.5 8.2-4.2 11.4l-27.4 32 31 115.1 .6 0 34.6-138.5c2.2-8.7 11.1-14 19.5-10.8 61.9 23.6 105.9 83.6 105.9 153.8 0 15.1-12.3 27.4-27.4 27.4L43.4 512c-15.1 0-27.4-12.3-27.4-27.4 0-70.2 44-130.2 105.9-153.8 8.4-3.2 17.3 2.1 19.5 10.8l34.6 138.5 .6 0 31-115.1-27.4-32c-2.7-3.2-4.2-7.2-4.2-11.4 0-9.7 7.8-17.5 17.5-17.5z" />
+            </svg>
+            <div class="flex items-center gap-2 text-xl lg:text-4xl text-white text-center lg:text-left">
+                <span>
+                    {{ persona?.nombre }} {{ persona?.apellido_paterno }} {{ persona?.apellido_materno }} - PERFIL OIRS
+                </span>
+            </div>
+        </div>
+
+        <div>
+            <button
+                class="w-full bg-[#1D609D] hover:bg-blue-600 text-white font-semibold py-2 px-6 lg:py-3 lg:px-9 rounded-md border-white text-lg lg:text-xl cursor-pointer"
+                (click)="logout()">
+                Cerrar Sesión
+            </button>
+        </div>
+
+        <div class="absolute bottom-0 left-0 flex w-full h-[4px]">
+            <div class="w-1/2 bg-[#0066B2]"></div>
+            <div class="w-1/2 bg-[#EE3740]"></div>
+        </div>
+
+    </header>
+
+    <div class="flex-grow w-full p-4 lg:p-8 lg:px-16 overflow-hidden">
+        <div class="h-full w-full grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            <!-- Panel Izquierdo -->
+            <div class="border-2 rounded-xl overflow-hidden flex flex-col h-[600px] lg:h-auto bg-white">
+                <div
+                    class="text-black text-center py-4 bg-[#D9D9D9] border-b flex items-center justify-center gap-2 shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 512 512">
+                        <path fill="#ecb700"
+                            d="M256 512a256 256 0 1 1 0-512 256 256 0 1 1 0 512zm0-192a32 32 0 1 0 0 64 32 32 0 1 0 0-64zm0-192c-18.2 0-32.7 15.5-31.4 33.7l7.4 104c.9 12.6 11.4 22.3 23.9 22.3 12.6 0 23-9.7 23.9-22.3l7.4-104c1.3-18.2-13.1-33.7-31.4-33.7z" />
+                    </svg>
+                    <span class="text-xl lg:text-2xl font-semibold">Solicitud de Información</span>
+                </div>
+
+                <div class="p-4 lg:p-6 flex flex-col flex-grow overflow-hidden">
+                    <div class="w-full mb-4 shrink-0">
+                        <form [formGroup]="userformSolicitud">
+                            <div class="flex flex-col lg:flex-row gap-4 lg:gap-6">
+
+                                <div class="flex-1">
+                                    <span class="text-base font-semibold">Identificador</span>
+                                    <input type="text" (input)="formatearRut(1)" formControlName="identificador"
+                                        placeholder="16xxxxxx-x" class="w-full border p-1 rounded-md bg-gray-100" />
+                                </div>
+
+                                <div class="flex-1">
+                                    <span class="text-base font-semibold">Episodio</span>
+                                    <input type="text" formControlName="episodio" placeholder="CDT-2025-XXXX"
+                                        class="w-full border p-1 rounded-md bg-gray-100" />
+                                </div>
+
+                                <div class="flex-1">
+                                    <span class="text-base font-semibold">Tipo Solicitud</span>
+                                    <input type="text" formControlName="tipo_solicitud"
+                                        class="w-full border p-1 rounded-md bg-gray-100" />
+                                </div>
+
+                                <div class="flex items-end">
+                                    <button (click)="busqueda(userformSolicitud, 1)"
+                                        class="w-full bg-[#38C870] hover:bg-green-600 text-white font-semibold py-2 rounded-md cursor-pointer flex items-center justify-center gap-2 p-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"
+                                            viewBox="0 0 640 640" class="fill-white">
+                                            <path
+                                                d="M480 272C480 317.9 465.1 360.3 440 394.7L566.6 521.4C579.1 533.9 579.1 554.2 566.6 566.7C554.1 579.2 533.8 579.2 521.3 566.7L394.7 440C360.3 465.1 317.9 480 272 480C157.1 480 64 386.9 64 272C64 157.1 157.1 64 272 64C386.9 64 480 157.1 480 272zM272 416C351.5 416 416 351.5 416 272C416 192.5 351.5 128 272 128C192.5 128 128 192.5 128 272C128 351.5 192.5 416 272 416z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="mt-2 border rounded-t-lg flex-grow overflow-hidden flex flex-col">
+                        <p-table #dt [value]="listaSolicitudFiltro" selectionMode="single"
+                            [style]="{'table-layout': 'auto', 'height': '100%'}" [scrollable]="true" scrollHeight="flex"
+                            class="flex flex-col h-full">
+                            <!-- Encabezados -->
+                            <ng-template pTemplate="header">
+                                <tr class="">
+                                    <th class="text-center border-b p-4">Identificador</th>
+                                    <th class="text-center border-b p-4">Episodio</th>
+                                    <th class="text-center border-b p-4">Fecha Solicitud</th>
+                                    <th class="text-center border-b p-4">Tipo Solicitud</th>
+                                    <th class="text-center border-b p-4">Acción</th>
+                                </tr>
+                            </ng-template>
+
+                            <!-- Cuerpo -->
+                            <ng-template pTemplate="body" let-rowData>
+                                <tr class="border-b text-black">
+                                    <td class="text-center border-r">{{ rowData.identificador }}</td>
+                                    <td class="text-center border-r">{{ rowData.episodio }}</td>
+                                    <td class="text-center border-r">{{ rowData.fecha_solicitud }}</td>
+                                    <td class="text-center border-r">{{ rowData.tipo_solicitud }}</td>
+                                    <td class="text-center px-4" (click)="verDetalleSolicitud(rowData)">
+                                        <button class="cursor-pointer mr-2" pTooltip=" - Portal Paciente - "
+                                            tooltipPosition="top">
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="36" width="36"
+                                                viewBox="0 0 640 640"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                                <path fill="#B197FC"
+                                                    d="M224 160C241.7 160 256 145.7 256 128C256 110.3 241.7 96 224 96L160 96C107 96 64 139 64 192L64 448C64 501 107 544 160 544L224 544C241.7 544 256 529.7 256 512C256 494.3 241.7 480 224 480L160 480C142.3 480 128 465.7 128 448L128 192C128 174.3 142.3 160 160 160L224 160zM566.6 342.6C579.1 330.1 579.1 309.8 566.6 297.3L438.6 169.3C426.1 156.8 405.8 156.8 393.3 169.3C380.8 181.8 380.8 202.1 393.3 214.6L466.7 288L256 288C238.3 288 224 302.3 224 320C224 337.7 238.3 352 256 352L466.7 352L393.3 425.4C380.8 437.9 380.8 458.2 393.3 470.7C405.8 483.2 426.1 483.2 438.6 470.7L566.6 342.7z" />
+                                            </svg>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel Derecho -->
+            <div class="border-2 rounded-xl overflow-hidden flex flex-col h-[600px] lg:h-auto bg-white">
+                <div
+                    class="text-black text-center py-4 bg-[#D9D9D9] border-b flex items-center justify-center gap-2 shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="32" width="32"
+                        viewBox="0 0 512 512"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                        <path fill="#38C870"
+                            d="M256 512a256 256 0 1 1 0-512 256 256 0 1 1 0 512zM374 145.7c-10.7-7.8-25.7-5.4-33.5 5.3L221.1 315.2 169 263.1c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l72 72c5 5 11.8 7.5 18.8 7s13.4-4.1 17.5-9.8L379.3 179.2c7.8-10.7 5.4-25.7-5.3-33.5z" />
+                    </svg>
+
+                    <span class="text-xl lg:text-2xl font-semibold">Felicitacion/Reclamos</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="32" width="32"
+                        viewBox="0 0 512 512"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                        <path fill="#ff2f2f"
+                            d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z" />
+                    </svg>
+                </div>
+
+                <div class="p-4 lg:p-6 flex flex-col flex-grow overflow-hidden">
+                    <div class="w-full mb-4 shrink-0">
+                        <form [formGroup]="userformRetroalimentacion">
+                            <div class="flex flex-col lg:flex-row gap-4 lg:gap-6">
+
+                                <div class="flex-1">
+                                    <span class="text-base font-semibold">Identificador Emisor</span>
+                                    <input type="text" (input)="formatearRut(2)" formControlName="identificador_emisor"
+                                        placeholder="16xxxxxx-x" class="w-full border p-1 rounded-md bg-gray-100" />
+                                </div>
+
+                                <div class="flex-1">
+                                    <span class="text-base font-semibold">Identificador Afectado</span>
+                                    <input type="text" (input)="formatearRut(3)"
+                                        formControlName="identificador_afectado" placeholder="16xxxxxx-x"
+                                        class="w-full border p-1 rounded-md bg-gray-100" />
+                                </div>
+
+                                <div class="flex-1">
+                                    <span class="text-base font-semibold">Categoría</span>
+                                    <input type="text" formControlName="tipo_categoria"
+                                        class="w-full border p-1 rounded-md bg-gray-100" />
+                                </div>
+
+                                <div class="flex items-end">
+                                    <button (click)="busqueda(userformRetroalimentacion, 2)"
+                                        class="w-full bg-[#38C870] hover:bg-green-600 text-white font-semibold py-2 rounded-md cursor-pointer flex items-center justify-center gap-2 p-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"
+                                            viewBox="0 0 640 640" class="fill-white">
+                                            <path
+                                                d="M480 272C480 317.9 465.1 360.3 440 394.7L566.6 521.4C579.1 533.9 579.1 554.2 566.6 566.7C554.1 579.2 533.8 579.2 521.3 566.7L394.7 440C360.3 465.1 317.9 480 272 480C157.1 480 64 386.9 64 272C64 157.1 157.1 64 272 64C386.9 64 480 157.1 480 272zM272 416C351.5 416 416 351.5 416 272C416 192.5 351.5 128 272 128C192.5 128 128 192.5 128 272C128 351.5 192.5 416 272 416z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="mt-2 border rounded-t-lg flex-grow overflow-hidden flex flex-col">
+                        <p-table #dt [value]="listaRetroalimentacionFiltro" selectionMode="single"
+                            [style]="{'table-layout': 'auto', 'height': '100%'}" [scrollable]="true" scrollHeight="flex"
+                            class="flex flex-col h-full">
+                            <!-- Encabezados -->
+                            <ng-template pTemplate="header">
+                                <tr class="">
+                                    <th class="text-center border-b p-4">Identificador Emisor</th>
+                                    <th class="text-center border-b p-4">Identificador Afectado</th>
+                                    <th class="text-center border-b p-4">Fecha Reclamo</th>
+                                    <th class="text-center border-b p-4">Tipo Categoría</th>
+                                    <th class="text-center border-b p-4">Acción</th>
+                                </tr>
+                            </ng-template>
+
+                            <!-- Cuerpo -->
+                            <ng-template pTemplate="body" let-rowData>
+                                <tr class="border-b text-black">
+                                    <td class="text-center border-r">{{ rowData.identificador }}</td>
+                                    <td class="text-center border-r">{{ rowData.episodio }}</td>
+                                    <td class="text-center border-r">{{ rowData.fecha_solicitud }}</td>
+                                    <td class="text-center border-r">{{ rowData.tipo_solicitud }}</td>
+                                    <td class="text-center px-4" (click)="verDetalleRetroalimentacion(rowData)">
+                                        <button class="cursor-pointer mr-2" pTooltip=" - Portal Paciente - "
+                                            tooltipPosition="top">
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="36" width="36"
+                                                viewBox="0 0 640 640"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                                <path fill="#B197FC"
+                                                    d="M224 160C241.7 160 256 145.7 256 128C256 110.3 241.7 96 224 96L160 96C107 96 64 139 64 192L64 448C64 501 107 544 160 544L224 544C241.7 544 256 529.7 256 512C256 494.3 241.7 480 224 480L160 480C142.3 480 128 465.7 128 448L128 192C128 174.3 142.3 160 160 160L224 160zM566.6 342.6C579.1 330.1 579.1 309.8 566.6 297.3L438.6 169.3C426.1 156.8 405.8 156.8 393.3 169.3C380.8 181.8 380.8 202.1 393.3 214.6L466.7 288L256 288C238.3 288 224 302.3 224 320C224 337.7 238.3 352 256 352L466.7 352L393.3 425.4C380.8 437.9 380.8 458.2 393.3 470.7C405.8 483.2 426.1 483.2 438.6 470.7L566.6 342.7z" />
+                                            </svg>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p-dialog [(visible)]="modalEventoDetalle" [draggable]="false" [style]="{width: '750px','height':'auto'}"
+            [contentStyle]="{'overflow': 'hidden'}" [closable]="true" [showHeader]="true" [modal]="true"
+            [resizable]="false">
+            <div class="p-4">
+                <div class="text-center mb-2">
+                    <span class="text-2xl font-semibold underline text-yellow-700">Detalle de Solicitud</span>
+                </div>
+                <div class="border rounded-lg p-4 px-4 mb-2">
+                    <div class="grid grid-cols-1 md:grid-cols-2 mb-3 gap-2">
+                        <div class="flex flex-col">
+                            <label class="text-base font-semibold mt-1">Identificador</label>
+                            <input type="text" [(ngModel)]="detalleSolicitud.identificador" disabled pInputText
+                                class="border p-1 rounded-md bg-gray-200 cursor-not-allowed w-full" />
+                        </div>
+                        <div class="flex flex-col">
+                            <label class="text-base font-semibold mt-1">Episodio</label>
+                            <input type="text" [(ngModel)]="detalleSolicitud.episodio" disabled pInputText
+                                class="border p-1 rounded-md bg-gray-200 cursor-not-allowed w-full" />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 mb-3 gap-2">
+                        <div class="flex flex-col">
+                            <label class="text-base font-semibold mt-1">Fecha Solicitud</label>
+                            <input type="text" [(ngModel)]="detalleSolicitud.fecha_solicitud" disabled pInputText
+                                class="border p-1 rounded-md bg-gray-200 cursor-not-allowed w-full" />
+                        </div>
+                        <div class="flex flex-col">
+                            <label class="text-base font-semibold mt-1">Tipo Solicitud</label>
+                            <input type="text" [(ngModel)]="detalleSolicitud.tipo_solicitud" disabled pInputText
+                                class="border p-1 rounded-md bg-gray-200 cursor-not-allowed w-full" />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 mb-3 gap-2">
+                        <div class="flex flex-col">
+                            <label class="text-base font-semibold mt-1">Correo Contacto</label>
+                            <input type="text" [(ngModel)]="detalleSolicitud.correo_contacto" disabled pInputText
+                                class="border p-1 rounded-md bg-gray-200 cursor-not-allowed w-full" />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="text-base font-semibold mt-1">Detalle de Solicitud</label>
+                        <textarea [autoResize]="false" [(ngModel)]="detalleSolicitud.detalle_solicitud" readonly
+                            pInputTextarea rows="5" cols="30" placeholder="Escribe aquí..."
+                            class="border p-1 rounded-md bg-gray-200 cursor-not-allowed w-full"></textarea>
+                    </div>
+                </div>
+
+                <div class="text-center mb-2">
+                    <span class="text-2xl font-semibold underline text-green-700">Dar Respuesta</span>
+                </div>
+
+                <div class="border rounded-lg p-4 px-4 mb-2">
+                    <div class="mb-3">
+                        <label class="text-base font-semibold mt-1">Detalle de Respuesta</label>
+                        <textarea [autoResize]="false" [(ngModel)]="detalleSolicitud.respuesta_detalle" pInputTextarea
+                            rows="5" cols="30" placeholder="Escribe aquí..."
+                            class="border p-1 rounded-md w-full"></textarea>
+                    </div>
+                    <button (click)="guardarInformacion()"
+                        class="w-full bg-[#38C870] hover:bg-green-700 text-white font-semibold py-2 rounded-md cursor-pointer">
+                        Guardar Información
+                    </button>
+                </div>
+            </div>
+        </p-dialog>
+
+
+    </div>
+
+    <div class="w-full px-4 grid grid-cols-2 items-center relative pb-2 shrink-0">
+        <div class="justify-start place-self-start px-2">
+            <span class="text-sm text-gray-500">
+                ©Complejo Asistencial Hospital Barros Luco
+            </span>
+        </div>
+        <div class="justify-end place-self-end px-2">
+            <span class="text-sm text-gray-500">
+                Versión 1.0.0
+            </span>
+        </div>
+    </div>
+
+</div>

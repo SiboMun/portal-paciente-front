@@ -1,0 +1,20 @@
+.fondo-barros-luco {
+    position: relative;
+    overflow: hidden; /* Opcional pero recomendado */
+}
+
+.fondo-barros-luco::before {
+    content: "";
+    position: absolute;
+    inset: 0; /* top, right, bottom, left = 0 */
+    background-image: url(../../../assets/img/entrada-historica-hospital-barros-luco.webp);
+    background-size: cover;
+    background-position: center;
+    filter: blur(3px);
+    z-index: 0;
+}
+
+.fondo-barros-luco > * {
+    position: relative;
+    z-index: 1; /* Para que el contenido quede encima del blur */
+}

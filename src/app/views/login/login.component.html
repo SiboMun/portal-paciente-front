@@ -1,0 +1,156 @@
+
+<div 
+  class="h-screen w-full bg-cover bg-center overflow-hidden"
+>
+
+  <!-- Aquí va tu header y el resto -->
+  <header class="w-full p-2 px-4 grid grid-cols-2 items-center relative">
+    
+
+
+    <img 
+      src="https://portalpaciente.hospitalsoterodelrio.cl/Static/img/PortalPaciente.png"
+      alt="Logo izquierdo"
+      class="h-12"
+    >
+
+    <img 
+      src="https://portalpaciente.hospitalsoterodelrio.cl/Static/img/PortalPaciente.png"
+      alt="Logo derecho"
+      class="h-12 justify-end place-self-end"
+    >
+
+    <div class="absolute bottom-0 left-0 flex w-full h-[4px]">
+      <div class="w-1/2 bg-[#0066B2]"></div>
+      <div class="w-1/2 bg-[#EE3740]"></div>
+    </div>
+  </header>
+
+  <div 
+    class="min-h-screen w-full bg-cover bg-center flex fondo-barros-luco"  >
+    
+     
+
+    <div class="bg-white/60 w-full px-4 md:px-10 lg:px-14 py-6 md:py-8 grid grid-cols-12 gap-6 lg:gap-10">
+
+      <!-- 🟦 SECCIÓN IZQUIERDA: TEXTO -->
+      <div class="hidden lg:block col-span-12 lg:col-span-8 text-gray-800 text-justify">
+        <p class="text-base mb-4 text-justify w-[70%]">
+          Bienvenido al <span class="font-bold">Portal del Paciente</span> del Complejo Asistencial Hospital Barros Luco
+        </p>
+
+        <p class="text-base mb-4 w-[70%]">
+          Este portal permite al usuario titular de la ficha clínica <span class="font-semibold">(paciente)</span> acceder a la copia de los diferentes documentos clínicos de su atención en el centro asistencial, todo mediante el uso de <span class="font-semibold">Clave Única</span> del Registro Civil.
+        </p>
+
+        <p class="text-base w-[60%]">
+          Podrá consultar:
+        </p>
+        <ul class="list-disc ml-6 mb-2">
+          <li>Lista de Espera de Consulta Ambulatoria.</li>
+          <li>Lista de Espera de Exámenes de Imagenología.</li>
+          <li>Lista de espera de Procedimientos.</li>
+          <li>Lista de espera de Cirugías.</li>
+        </ul>
+
+        <p class="text-base w-[60%]">
+          Podrá consultar, entre otros documentos:
+        </p>
+        <ul class="list-disc ml-6 mb-2">
+          <li>Recetas de medicamentos ambulatorios, hospitalizados y Urgencia.</li>
+          <li>Resultados de exámenes (Laboratorio y Radiología)</li>
+          <li>Resumen de atenciones en servicio de Urgencia</li>
+        </ul>
+
+        <p class="text-base w-[70%]">
+          Podrá actualizar información personal relevante para el proceso de atención clínica:
+        </p>
+        <ul class="list-disc ml-6 mb-2">
+          <li>Dirección</li>
+          <li>Numero de contacto</li>
+          <li>Nombre social</li>
+          <li>Ocupacion</li>
+          <li>Religión</li>
+          <li>Pueblo Originario</li>
+          <li>Etc</li>
+        </ul>
+      </div>
+
+      <!-- 🟥 SECCIÓN DERECHA: FORMULARIO LOGIN -->
+      <div class="col-span-12 flex justify-center items-start lg:col-span-4">
+        <p-toast/>
+        
+        <div class="bg-white/90 shadow-md border border-gray-300 rounded-xl p-6 md:p-8 w-full max-w-sm md:max-w-md">
+
+          <h2 class="text-center text-lg font-semibold mb-4 text-gray-600">
+            Accedas aquí con su clave única
+          </h2>
+
+          <img
+            [src]="aceptaTerminos 
+                  ? 'https://portalpaciente.hospitalsoterodelrio.cl/Static/img/ClaveUnica.png' 
+                  : 'https://portalpaciente.hospitalsoterodelrio.cl/Static/img/ClaveUnicaDisabled.png'"
+
+            alt="Clave Única"
+            class="mx-auto h-12 mb-4 cursor-pointer"
+          />
+
+
+
+          <p class="font-semibold text-base text-center text-[#1A8BE0] mb-2">¿No tiene Clave Única? <a class="text-black underline cursor-pointer"> clic aquí</a></p>
+
+
+          <!-- Checkbox -->
+          <label class="flex items-center space-x-1 mb-2 cursor-pointer">
+            <input 
+              type="checkbox" 
+              class="form-checkbox text-blue-600 border-gray-300 rounded"
+              [(ngModel)]="aceptaTerminos"
+            />
+
+            <p class="font-semibold text-base text-[#1A8BE0] text-center">
+              Acepto los términos y condiciones de uso.
+            </p>
+          </label>
+
+          <p class="text-center font-bold mb-2">O</p>
+
+          <!-- Inputs -->
+          <div class="space-y-2 mb-6">
+            <form [formGroup]="userform">
+              <div>
+                <p class="text-base">Identificador</p>
+                <input (keyup)="formatearRut()" formControlName="usuario"  type="text" placeholder="19xxxxxx-x" class="w-full border p-2 rounded-md" />
+              </div>
+              <div>
+                <p class="text-base">Contraseña</p>
+                <input type="password" formControlName="clave" placeholder="*****" class="w-full border p-2 rounded-md" />
+              </div>
+            </form>
+          </div>
+
+          <!-- Botón ingresar -->
+          <button class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-md cursor-pointer" (click)="login()">
+            Ingresar
+          </button>
+
+          <p class="text-center mt-6 text-base font-semibold text-[#1A8BE0]">
+            ¿Tiene dudas con el Portal Paciente?
+          </p>
+          <p class="text-base text-center text-[#1A8BE0] mb-4">revise la sección de  <a class="text-black underline cursor-pointer">  preguntas frecuentes aquí</a></p>
+
+          <p class="text-base text-center"><a class="text-black underline cursor-pointer">Leer términos y condiciones de uso aquí</a></p>
+
+          <p class="text-end mt-2 text-xs text-gray-500">
+            Versión 1.0.2
+          </p>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>

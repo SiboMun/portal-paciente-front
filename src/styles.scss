@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+/* PRIME NG THEME */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+
+/* PRIME NG CORE */
+@import "primeng/resources/primeng.css";
+
+/* PRIME ICONS */
+@import "primeicons/primeicons.css";
+
+/* TAILWIND */
+@import "tailwindcss";
+
+
+body {
+  min-height: 100vh;
+}
+
+html, body {
+  height: 100%;
+}
