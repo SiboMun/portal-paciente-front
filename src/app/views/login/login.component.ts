@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PortalService } from '../../services/portal.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate, Router, RouterModule } from '@angular/router';
 
 
 
@@ -16,14 +16,13 @@ import Swal from 'sweetalert2'
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, ToastModule],
+  imports: [FormsModule, ReactiveFormsModule, ToastModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
   constructor(private portalService: PortalService,
     private fb: FormBuilder,
-    private messageService: MessageService,
     private router: Router
   ) {
 

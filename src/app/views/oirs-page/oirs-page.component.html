@@ -94,6 +94,7 @@
                                     <th class="text-center border-b p-4">Identificador</th>
                                     <th class="text-center border-b p-4">Episodio</th>
                                     <th class="text-center border-b p-4">Fecha Solicitud</th>
+                                    <th class="text-center border-b p-4">Estado</th>
                                     <th class="text-center border-b p-4">Tipo Solicitud</th>
                                     <th class="text-center border-b p-4">Acción</th>
                                 </tr>
@@ -101,10 +102,11 @@
 
                             <!-- Cuerpo -->
                             <ng-template pTemplate="body" let-rowData>
-                                <tr class="border-b text-black">
+                                <tr class="border-b text-black text-base">
                                     <td class="text-center border-r">{{ rowData.identificador }}</td>
                                     <td class="text-center border-r">{{ rowData.episodio }}</td>
                                     <td class="text-center border-r">{{ rowData.fecha_solicitud }}</td>
+                                    <td class="text-center border-r">{{ rowData.glosa_estado }}</td>
                                     <td class="text-center border-r">{{ rowData.tipo_solicitud }}</td>
                                     <td class="text-center px-4" (click)="verDetalleSolicitud(rowData)">
                                         <button class="cursor-pointer mr-2" pTooltip=" - Portal Paciente - "
@@ -196,10 +198,10 @@
                             <!-- Cuerpo -->
                             <ng-template pTemplate="body" let-rowData>
                                 <tr class="border-b text-black">
-                                    <td class="text-center border-r">{{ rowData.identificador }}</td>
-                                    <td class="text-center border-r">{{ rowData.episodio }}</td>
+                                    <td class="text-center border-r">{{ rowData.identificador_emisor }}</td>
+                                    <td class="text-center border-r">{{ rowData.identificador_afectado }}</td>
                                     <td class="text-center border-r">{{ rowData.fecha_solicitud }}</td>
-                                    <td class="text-center border-r">{{ rowData.tipo_solicitud }}</td>
+                                    <td class="text-center border-r">{{ rowData.glosa_tipo_retroalinebtacion }}</td>
                                     <td class="text-center px-4" (click)="verDetalleRetroalimentacion(rowData)">
                                         <button class="cursor-pointer mr-2" pTooltip=" - Portal Paciente - "
                                             tooltipPosition="top">
@@ -284,9 +286,76 @@
                         Guardar Información
                     </button>
                 </div>
+                <div class="justify-end place-self-end px-2">
+                    <span class="text-sm text-gray-500">
+                        Versión 1.0.0
+                    </span>
+                </div>
             </div>
         </p-dialog>
 
+        <p-dialog [(visible)]="modalRetroalimentacionDetalle" [draggable]="false"
+            [style]="{width: '750px','height':'auto'}" [contentStyle]="{'overflow': 'hidden'}" [closable]="true"
+            [showHeader]="true" [modal]="true" [resizable]="false">
+            <div class="p-4">
+                <div class="text-center mb-2">
+                    <span class="text-2xl font-semibold underline text-yellow-700">Detalle de
+                        Felicitación/Reclamo</span>
+                </div>
+                <div class="border rounded-lg p-4 px-4 mb-2">
+                    <div class="grid grid-cols-1 md:grid-cols-2 mb-3 gap-2">
+                        <div class="flex flex-col">
+                            <label class="text-base font-semibold mt-1">Identificador Emisor</label>
+                            <input type="text" [(ngModel)]="detalleRetroalimentacion.identificador_emisor" disabled
+                                pInputText class="border p-1 rounded-md bg-gray-200 cursor-not-allowed w-full" />
+                        </div>
+                        <div class="flex flex-col">
+                            <label class="text-base font-semibold mt-1">Identificador Afectado</label>
+                            <input type="text" [(ngModel)]="detalleRetroalimentacion.identificador_afectado" disabled
+                                pInputText class="border p-1 rounded-md bg-gray-200 cursor-not-allowed w-full" />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 mb-3 gap-2">
+                        <div class="flex flex-col">
+                            <label class="text-base font-semibold mt-1">Fecha Solicitud</label>
+                            <input type="text" [(ngModel)]="detalleRetroalimentacion.fecha_solicitud" disabled
+                                pInputText class="border p-1 rounded-md bg-gray-200 cursor-not-allowed w-full" />
+                        </div>
+                        <div class="flex flex-col">
+                            <label class="text-base font-semibold mt-1">Categoría</label>
+                            <input type="text" [(ngModel)]="detalleRetroalimentacion.glosa_tipo_retroalinebtacion"
+                                disabled pInputText
+                                class="border p-1 rounded-md bg-gray-200 cursor-not-allowed w-full" />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="text-base font-semibold mt-1">Observación</label>
+                        <textarea [autoResize]="false" [(ngModel)]="detalleRetroalimentacion.observacion" readonly
+                            pInputTextarea rows="5" cols="30" placeholder="Escribe aquí..."
+                            class="border p-1 rounded-md bg-gray-200 cursor-not-allowed w-full"></textarea>
+                    </div>
+                </div>
+
+                <div class="text-center mb-2">
+                    <span class="text-2xl font-semibold underline text-green-700">Dar Respuesta</span>
+                </div>
+
+                <div class="border rounded-lg p-4 px-4 mb-2">
+                    <div class="mb-3">
+                        <label class="text-base font-semibold mt-1">Detalle de Respuesta</label>
+                        <textarea [autoResize]="false" [(ngModel)]="detalleRetroalimentacion.respuesta_detalle"
+                            pInputTextarea rows="5" cols="30" placeholder="Escribe aquí..."
+                            class="border p-1 rounded-md w-full"></textarea>
+                    </div>
+                    <button (click)="guardarRetroalimentacion()"
+                        class="w-full bg-[#38C870] hover:bg-green-700 text-white font-semibold py-2 rounded-md cursor-pointer">
+                        Guardar Información
+                    </button>
+                </div>
+            </div>
+        </p-dialog>
 
     </div>
 

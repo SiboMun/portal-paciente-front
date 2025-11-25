@@ -23,56 +23,103 @@
 
         <div class="bg-white/60 w-full px-4 md:px-10 lg:px-14 py-6 md:py-8 grid grid-cols-12 gap-6 lg:gap-10">
 
-            <!-- 🟦 SECCIÓN IZQUIERDA: TEXTO -->
-            <div class="hidden lg:block col-span-12 lg:col-span-8 text-gray-800 text-justify">
+            <!-- 🟦 SECCIÓN IZQUIERDA: TEXTO ADMINISTRADOR -->
+            <div *ngIf="perfilSeleccionado === 1"
+                class="hidden lg:block col-span-12 lg:col-span-8 text-gray-800 text-justify">
                 <p class="text-base mb-4 text-justify w-[70%]">
-                    Bienvenido al <span class="font-bold">Portal del Paciente</span> del Complejo Asistencial Hospital
+                    Bienvenido al <span class="font-bold">Portal Administrador</span> del Complejo Asistencial Hospital
                     Barros Luco
                 </p>
 
                 <p class="text-base mb-4 w-[70%]">
-                    Este portal permite al usuario titular de la ficha clínica <span
-                        class="font-semibold">(paciente)</span> acceder a la copia de los diferentes documentos clínicos
-                    de su atención en el centro asistencial, todo mediante el uso de <span class="font-semibold">Clave
-                        Única</span> del Registro Civil.
+                    Este portal está dirigido a funcionarios autorizados que atienden presencialmente a los usuarios en
+                    el centro asistencial.
+                    Permite buscar y seleccionar a un paciente en el sistema institucional para acceder,
+                    en su nombre, a las mismas funcionalidades disponibles en el <span class="font-semibold">Portal del
+                        Paciente</span>.
                 </p>
 
                 <p class="text-base w-[60%]">
-                    Podrá consultar:
+                    El funcionario podrá consultar:
                 </p>
                 <ul class="list-disc ml-6 mb-2">
                     <li>Lista de Espera de Consulta Ambulatoria.</li>
                     <li>Lista de Espera de Exámenes de Imagenología.</li>
-                    <li>Lista de espera de Procedimientos.</li>
-                    <li>Lista de espera de Cirugías.</li>
+                    <li>Lista de Espera de Procedimientos.</li>
+                    <li>Lista de Espera de Cirugías.</li>
                 </ul>
 
                 <p class="text-base w-[60%]">
-                    Podrá consultar, entre otros documentos:
+                    Así como acceder y entregar al paciente copia de documentos clínicos tales como:
                 </p>
                 <ul class="list-disc ml-6 mb-2">
-                    <li>Recetas de medicamentos ambulatorios, hospitalizados y Urgencia.</li>
-                    <li>Resultados de exámenes (Laboratorio y Radiología)</li>
-                    <li>Resumen de atenciones en servicio de Urgencia</li>
+                    <li>Recetas de medicamentos ambulatorios, hospitalizados y Urgencia.</li>
+                    <li>Resultados de exámenes (Laboratorio y Radiología).</li>
+                    <li>Resumen de atenciones en el servicio de Urgencia.</li>
                 </ul>
 
                 <p class="text-base w-[70%]">
-                    Podrá actualizar información personal relevante para el proceso de atención clínica:
+                    Además, podrá asistir al paciente en la actualización de información personal relevante para la
+                    atención clínica:
                 </p>
                 <ul class="list-disc ml-6 mb-2">
                     <li>Dirección</li>
-                    <li>Numero de contacto</li>
+                    <li>Número de contacto</li>
                     <li>Nombre social</li>
-                    <li>Ocupacion</li>
+                    <li>Ocupación</li>
                     <li>Religión</li>
-                    <li>Pueblo Originario</li>
-                    <li>Etc</li>
+                    <li>Pueblo originario</li>
+                    <li>Otros</li>
                 </ul>
             </div>
 
+            <!-- 🟦 SECCIÓN IZQUIERDA: TEXTO OIRS -->
+            <div *ngIf="perfilSeleccionado === 2"
+                class="hidden lg:block col-span-12 lg:col-span-8 text-gray-800 text-justify">
+                <p class="text-base mb-4 text-justify w-[70%]">
+                    Bienvenido al <span class="font-bold">Portal OIRS</span> del Complejo Asistencial Hospital
+                    Barros Luco
+                </p>
+
+                <p class="text-base mb-4 w-[70%]">
+                    Este portal está destinado a los funcionarios de la <span class="font-semibold">Oficina de
+                        Informaciones, Reclamos y Sugerencias (OIRS)</span>.
+                    Permite gestionar y dar respuesta a las solicitudes de los pacientes, incluyendo felicitaciones,
+                    reclamos y requerimientos asociados a su experiencia en el centro asistencial.
+                </p>
+
+                <p class="text-base w-[60%]">
+                    Desde este portal, el funcionario podrá:
+                </p>
+                <ul class="list-disc ml-6 mb-2">
+                    <li>Recibir, revisar y gestionar felicitaciones presentadas por los pacientes.</li>
+                    <li>Gestionar reclamos y sugerencias, realizando el seguimiento correspondiente.</li>
+                    <li>Registrar observaciones y avances durante la tramitación de cada caso.</li>
+                </ul>
+
+                <p class="text-base w-[60%]">
+                    Además, podrá gestionar solicitudes de información clínica adicional que el paciente no puede
+                    obtener directamente desde su Portal del Paciente, tales como:
+                </p>
+                <ul class="list-disc ml-6 mb-2">
+                    <li>Solicitud de evoluciones médicas asociadas a un episodio específico.</li>
+                    <li>Solicitud de recetas médicas.</li>
+                    <li>Solicitud de resultados de exámenes no disponibles en el portal.</li>
+                    <li>Otras solicitudes especiales de documentos clínicos.</li>
+                </ul>
+
+                <p class="text-base w-[70%]">
+                    Cada solicitud estará asociada al paciente, a un episodio de atención y podrá incluir un detalle u
+                    observación específica entregada por el usuario.
+                    El paciente deberá proporcionar un correo electrónico válido para recibir los documentos solicitados
+                    de manera segura y conforme a los protocolos de entrega de información.
+                </p>
+            </div>
+
+
+
             <!-- 🟥 SECCIÓN DERECHA: FORMULARIO LOGIN -->
             <div class="col-span-12 flex justify-center items-start lg:col-span-4">
-                <p-toast />
 
                 <div
                     class="bg-white/90 shadow-md border border-gray-300 rounded-xl p-6 md:p-8 w-full max-w-sm md:max-w-md">
@@ -106,15 +153,13 @@
 
                     <!-- Botones de selección de perfil -->
                     <div class="flex gap-4 mb-6 justify-center">
-                        <button (click)="seleccionarPerfil(2)" [class.bg-[#073763]]="perfilSeleccionado === 2"
-                            [class.text-white]="perfilSeleccionado === 2" [class.bg-gray-200]="perfilSeleccionado !== 2"
-                            [class.text-gray-700]="perfilSeleccionado !== 2"
+                        <button (click)="seleccionarPerfil(2)"
+                            [ngClass]="{'bg-[#073763] text-white': perfilSeleccionado === 2, 'bg-gray-200 text-gray-700': perfilSeleccionado !== 2}"
                             class="px-4 py-2 rounded-md font-semibold transition-colors duration-200 hover:bg-opacity-90 flex-1">
                             OIRS
                         </button>
-                        <button (click)="seleccionarPerfil(1)" [class.bg-[#073763]]="perfilSeleccionado === 1"
-                            [class.text-white]="perfilSeleccionado === 1" [class.bg-gray-200]="perfilSeleccionado !== 1"
-                            [class.text-gray-700]="perfilSeleccionado !== 1"
+                        <button (click)="seleccionarPerfil(1)"
+                            [ngClass]="{'bg-[#073763] text-white': perfilSeleccionado === 1, 'bg-gray-200 text-gray-700': perfilSeleccionado !== 1}"
                             class="px-4 py-2 rounded-md font-semibold transition-colors duration-200 hover:bg-opacity-90 flex-1">
                             Administrador
                         </button>

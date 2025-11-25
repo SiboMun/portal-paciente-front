@@ -13,17 +13,18 @@ import { MessageService } from 'primeng/api';
 
 import Swal from 'sweetalert2'
 
+import { CommonModule } from '@angular/common';
+
 @Component({
     selector: 'app-login-funcionario',
     standalone: true,
-    imports: [FormsModule, ReactiveFormsModule, ToastModule],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, ToastModule],
     templateUrl: './login-funcionario.component.html',
     styleUrl: './login-funcionario.component.scss'
 })
 export class LoginFuncionarioComponent {
     constructor(private portalService: PortalService,
         private fb: FormBuilder,
-        private messageService: MessageService,
         private router: Router
     ) {
 

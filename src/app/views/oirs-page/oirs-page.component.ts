@@ -12,13 +12,13 @@ import { FileUploadModule } from 'primeng/fileupload';
 
 
 
-import { format }  from 'rut.js';
+import { format } from 'rut.js';
 import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-oirs-page',
   standalone: true,
-  imports: [TableModule, CommonModule, TooltipModule, FormsModule, ReactiveFormsModule, DialogModule, InputTextareaModule, FileUploadModule],  
+  imports: [TableModule, CommonModule, TooltipModule, FormsModule, ReactiveFormsModule, DialogModule, InputTextareaModule, FileUploadModule],
   templateUrl: './oirs-page.component.html',
   styleUrl: './oirs-page.component.scss'
 })
@@ -47,9 +47,20 @@ export class OirsPageComponent implements OnInit {
     respuesta_detalle: ''
   }
 
+  modalRetroalimentacionDetalle: boolean = false;
+
+  detalleRetroalimentacion = {
+    identificador_emisor: '',
+    identificador_afectado: '',
+    fecha_solicitud: '',
+    glosa_tipo_retroalinebtacion: '',
+    observacion: '',
+    respuesta_detalle: ''
+  }
+
   constructor(private router: Router,
     private fb: FormBuilder,
-  ) {}
+  ) { }
 
 
   listaSolicitudTotal = [
@@ -70,7 +81,7 @@ export class OirsPageComponent implements OnInit {
       tipo_solicitud: "SOLICITUD RECETA MED.",
       observacion: "POR FAVOR SE SOLICITA EVOLUCIONES DE LA ATENCION YA QUE ESTOS NO SE ENCUENTRAN DENTRO DEL RESUMEN DE ATENCION (CDT-2025-4645). ",
       id_estado: "1",
-      glosa_estado: "PENDIENTE",
+      glosa_estado: "ENTREGADA",
       correo_contacto: "siboney.muñoz@gmail.com"
     },
     {
@@ -80,7 +91,7 @@ export class OirsPageComponent implements OnInit {
       tipo_solicitud: "SOLICITUD RESULTADO",
       observacion: "POR FAVOR SE SOLICITA EVOLUCIONES DE LA ATENCION YA QUE ESTOS NO SE ENCUENTRAN DENTRO DEL RESUMEN DE ATENCION (CDT-2025-4645). ",
       id_estado: "1",
-      glosa_estado: "PENDIENTE",
+      glosa_estado: "ENTREGADA",
       correo_contacto: "siboney.muñoz@gmail.com"
     },
     {
@@ -90,7 +101,7 @@ export class OirsPageComponent implements OnInit {
       tipo_solicitud: "SOLICITUD EVOLUACIÓN",
       observacion: "POR FAVOR SE SOLICITA EVOLUCIONES DE LA ATENCION YA QUE ESTOS NO SE ENCUENTRAN DENTRO DEL RESUMEN DE ATENCION (CDT-2025-4645). ",
       id_estado: "1",
-      glosa_estado: "PENDIENTE",
+      glosa_estado: "ENTREGADA",
       correo_contacto: "siboney.muñoz@gmail.com"
     },
     {
@@ -100,7 +111,7 @@ export class OirsPageComponent implements OnInit {
       tipo_solicitud: "SOLICITUD RESULTADO",
       observacion: "POR FAVOR SE SOLICITA EVOLUCIONES DE LA ATENCION YA QUE ESTOS NO SE ENCUENTRAN DENTRO DEL RESUMEN DE ATENCION (CDT-2025-4645). ",
       id_estado: "1",
-      glosa_estado: "PENDIENTE",
+      glosa_estado: "ENTREGADA",
       correo_contacto: "fernando.lopez@gmail.com"
     },
     {
@@ -110,11 +121,11 @@ export class OirsPageComponent implements OnInit {
       tipo_solicitud: "SOLICITUD EVOLUACIÓN",
       observacion: "POR FAVOR SE SOLICITA EVOLUCIONES DE LA ATENCION YA QUE ESTOS NO SE ENCUENTRAN DENTRO DEL RESUMEN DE ATENCION (CDT-2025-4645). ",
       id_estado: "1",
-      glosa_estado: "PENDIENTE",
+      glosa_estado: "ENTREGADA",
       correo_contacto: "fernando.lopez@gmail.com"
     }
   ];
-  
+
   listaSolicitudFiltro: any[] = [];
 
   listaRetroalimentacionTotal = [
@@ -125,9 +136,41 @@ export class OirsPageComponent implements OnInit {
       id_tipo_retroalinebtacion: "1",
       glosa_tipo_retroalinebtacion: "RECLAMO",
       observacion: "MAL ATENCION POR PARTE DEL PERSONA, LUIS (18983537-K) RECIBIO UN MAL TRATO POR PARTE DEL DOCTOR HERNAN SOTO"
+    },
+    {
+      identificador_emisor: "15888333-2",
+      identificador_afectado: "15888333-2",
+      fecha_solicitud: "15/11/2025",
+      id_tipo_retroalinebtacion: "2",
+      glosa_tipo_retroalinebtacion: "FELICITACIÓN",
+      observacion: "EXCELENTE ATENCIÓN EN EL SERVICIO DE URGENCIA, MUY RÁPIDO Y AMABLE EL PERSONAL."
+    },
+    {
+      identificador_emisor: "12345678-9",
+      identificador_afectado: "98765432-1",
+      fecha_solicitud: "10/11/2025",
+      id_tipo_retroalinebtacion: "1",
+      glosa_tipo_retroalinebtacion: "RECLAMO",
+      observacion: "DEMORA EXCESIVA EN LA ENTREGA DE MEDICAMENTOS EN FARMACIA."
+    },
+    {
+      identificador_emisor: "11223344-5",
+      identificador_afectado: "11223344-5",
+      fecha_solicitud: "18/11/2025",
+      id_tipo_retroalinebtacion: "3",
+      glosa_tipo_retroalinebtacion: "SUGERENCIA",
+      observacion: "SE SUGIERE MEJORAR LA SEÑALÉTICA EN EL SECTOR DE IMAGENOLOGÍA."
+    },
+    {
+      identificador_emisor: "99887766-5",
+      identificador_afectado: "55443322-1",
+      fecha_solicitud: "05/11/2025",
+      id_tipo_retroalinebtacion: "1",
+      glosa_tipo_retroalinebtacion: "RECLAMO",
+      observacion: "NO SE RESPETÓ LA HORA DE LA CITA MÉDICA, ESPERÉ MÁS DE 2 HORAS."
     }
   ];
-  
+
   listaRetroalimentacionFiltro: any[] = [];
 
 
@@ -189,54 +232,67 @@ export class OirsPageComponent implements OnInit {
 
   busqueda(data: any, tipo_busuqeda: number) {
     console.log('data ,', data.value);
-    
-    let identificador = data.value.identificador?.trim().toLowerCase();
-    console.log('identificador ,', identificador);
-    
-    let episodio = data.value.episodio?.trim().toLowerCase();
-    // let tipo_solicitud = data.value.numero_ficha?.trim().toLowerCase();
 
-    this.listaSolicitudFiltro = this.listaSolicitudTotal.filter((p) => {
+    if (tipo_busuqeda === 1) {
+      let identificador = data.value.identificador?.trim().toLowerCase();
+      let episodio = data.value.episodio?.trim().toLowerCase();
+      // let tipo_solicitud = data.value.numero_ficha?.trim().toLowerCase();
 
-      const matchIdentificador =
-        !identificador || p.identificador.toLowerCase().includes(identificador);
+      this.listaSolicitudFiltro = this.listaSolicitudTotal.filter((p) => {
 
-      const matchEpisodio =
-        !episodio || p.episodio.toLowerCase().includes(episodio);
+        const matchIdentificador =
+          !identificador || p.identificador.toLowerCase().includes(identificador);
 
-      // const matchFicha =
-      //   !numero_ficha || (p.numero_ficha?.toLowerCase().includes(numero_ficha));
+        const matchEpisodio =
+          !episodio || p.episodio.toLowerCase().includes(episodio);
 
-      return matchIdentificador && matchEpisodio;
-    });
+        // const matchFicha =
+        //   !numero_ficha || (p.numero_ficha?.toLowerCase().includes(numero_ficha));
+
+        return matchIdentificador && matchEpisodio;
+      });
+    } else if (tipo_busuqeda === 2) {
+      let identificador_emisor = data.value.identificador_emisor?.trim().toLowerCase();
+      let identificador_afectado = data.value.identificador_afectado?.trim().toLowerCase();
+      let tipo_categoria = data.value.tipo_categoria?.trim().toLowerCase();
+
+      this.listaRetroalimentacionFiltro = this.listaRetroalimentacionTotal.filter((p) => {
+        const matchEmisor = !identificador_emisor || p.identificador_emisor.toLowerCase().includes(identificador_emisor);
+        const matchAfectado = !identificador_afectado || p.identificador_afectado.toLowerCase().includes(identificador_afectado);
+        const matchCategoria = !tipo_categoria || p.glosa_tipo_retroalinebtacion.toLowerCase().includes(tipo_categoria);
+
+        return matchEmisor && matchAfectado && matchCategoria;
+      });
+    }
+
   }
 
-  limpiar(){
+  limpiar() {
     this.listaSolicitudFiltro = [];
     this.userformSolicitud.patchValue({
-        identificador: '',
-        nombre: '',
-        numero_ficha: ''
+      identificador: '',
+      nombre: '',
+      numero_ficha: ''
     });
   }
 
-  formatearRut(id_rut: number){
+  formatearRut(id_rut: number) {
     switch (id_rut) {
-      case 1: 
+      case 1:
         this.userformSolicitud.patchValue({
           identificador: format(this.userformSolicitud.value.identificador).replace(/\./gi, '')
         });
-      break;
-      case 2: 
+        break;
+      case 2:
         this.userformRetroalimentacion.patchValue({
           identificador_emisor: format(this.userformRetroalimentacion.value.identificador_emisor).replace(/\./gi, '')
         });
-      break;
+        break;
       case 3:
         this.userformRetroalimentacion.patchValue({
           identificador_afectado: format(this.userformRetroalimentacion.value.identificador_afectado).replace(/\./gi, '')
         });
-      break;
+        break;
     }
   }
 
@@ -251,18 +307,19 @@ export class OirsPageComponent implements OnInit {
   }
 
   verDetalleRetroalimentacion(solicitud: any) {
-    console.log('solicitud, ', solicitud);
+    this.modalRetroalimentacionDetalle = true;
+    this.detalleRetroalimentacion = { ...solicitud }; // Copia simple del objeto
   }
 
-  guardarInformacion(){
-    if(this.detalleSolicitud.respuesta_detalle.length > 0){
+  guardarInformacion() {
+    if (this.detalleSolicitud.respuesta_detalle.length > 0) {
       this.modalEventoDetalle = false;
       Swal.fire({
         title: "Información Guardada!",
         icon: "success",
         draggable: false
       });
-    }else{
+    } else {
       this.modalEventoDetalle = false;
       Swal.fire({
         title: 'Información faltante!',
@@ -277,7 +334,16 @@ export class OirsPageComponent implements OnInit {
         }
       });
     }
-    
+
+  }
+
+  guardarRetroalimentacion() {
+    this.modalRetroalimentacionDetalle = false;
+    Swal.fire({
+      title: "Información Guardada!",
+      icon: "success",
+      draggable: false
+    });
   }
 
 }

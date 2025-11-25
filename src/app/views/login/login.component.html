@@ -1,24 +1,15 @@
-
-<div 
-  class="h-screen w-full bg-cover bg-center overflow-hidden"
->
+<div class="h-screen w-full bg-cover bg-center overflow-hidden">
 
   <!-- Aquí va tu header y el resto -->
   <header class="w-full p-2 px-4 grid grid-cols-2 items-center relative">
-    
 
 
-    <img 
-      src="https://portalpaciente.hospitalsoterodelrio.cl/Static/img/PortalPaciente.png"
-      alt="Logo izquierdo"
-      class="h-12"
-    >
 
-    <img 
-      src="https://portalpaciente.hospitalsoterodelrio.cl/Static/img/PortalPaciente.png"
-      alt="Logo derecho"
-      class="h-12 justify-end place-self-end"
-    >
+    <img src="https://portalpaciente.hospitalsoterodelrio.cl/Static/img/PortalPaciente.png" alt="Logo izquierdo"
+      class="h-12">
+
+    <img src="https://portalpaciente.hospitalsoterodelrio.cl/Static/img/PortalPaciente.png" alt="Logo derecho"
+      class="h-12 justify-end place-self-end">
 
     <div class="absolute bottom-0 left-0 flex w-full h-[4px]">
       <div class="w-1/2 bg-[#0066B2]"></div>
@@ -26,10 +17,9 @@
     </div>
   </header>
 
-  <div 
-    class="min-h-screen w-full bg-cover bg-center flex fondo-barros-luco"  >
-    
-     
+  <div class="min-h-screen w-full bg-cover bg-center flex fondo-barros-luco">
+
+
 
     <div class="bg-white/60 w-full px-4 md:px-10 lg:px-14 py-6 md:py-8 grid grid-cols-12 gap-6 lg:gap-10">
 
@@ -40,7 +30,9 @@
         </p>
 
         <p class="text-base mb-4 w-[70%]">
-          Este portal permite al usuario titular de la ficha clínica <span class="font-semibold">(paciente)</span> acceder a la copia de los diferentes documentos clínicos de su atención en el centro asistencial, todo mediante el uso de <span class="font-semibold">Clave Única</span> del Registro Civil.
+          Este portal permite al usuario titular de la ficha clínica <span class="font-semibold">(paciente)</span>
+          acceder a la copia de los diferentes documentos clínicos de su atención en el centro asistencial, todo
+          mediante el uso de <span class="font-semibold">Clave Única</span> del Registro Civil.
         </p>
 
         <p class="text-base w-[60%]">
@@ -78,35 +70,28 @@
 
       <!-- 🟥 SECCIÓN DERECHA: FORMULARIO LOGIN -->
       <div class="col-span-12 flex justify-center items-start lg:col-span-4">
-        <p-toast/>
-        
+
         <div class="bg-white/90 shadow-md border border-gray-300 rounded-xl p-6 md:p-8 w-full max-w-sm md:max-w-md">
 
           <h2 class="text-center text-lg font-semibold mb-4 text-gray-600">
             Accedas aquí con su clave única
           </h2>
 
-          <img
-            [src]="aceptaTerminos 
+          <img [src]="aceptaTerminos 
                   ? 'https://portalpaciente.hospitalsoterodelrio.cl/Static/img/ClaveUnica.png' 
                   : 'https://portalpaciente.hospitalsoterodelrio.cl/Static/img/ClaveUnicaDisabled.png'"
-
-            alt="Clave Única"
-            class="mx-auto h-12 mb-4 cursor-pointer"
-          />
+            alt="Clave Única" class="mx-auto h-12 mb-4 cursor-pointer" />
 
 
 
-          <p class="font-semibold text-base text-center text-[#1A8BE0] mb-2">¿No tiene Clave Única? <a class="text-black underline cursor-pointer"> clic aquí</a></p>
+          <p class="font-semibold text-base text-center text-[#1A8BE0] mb-2">¿No tiene Clave Única? <a
+              class="text-black underline cursor-pointer"> clic aquí</a></p>
 
 
           <!-- Checkbox -->
           <label class="flex items-center space-x-1 mb-2 cursor-pointer">
-            <input 
-              type="checkbox" 
-              class="form-checkbox text-blue-600 border-gray-300 rounded"
-              [(ngModel)]="aceptaTerminos"
-            />
+            <input type="checkbox" class="form-checkbox text-blue-600 border-gray-300 rounded"
+              [(ngModel)]="aceptaTerminos" />
 
             <p class="font-semibold text-base text-[#1A8BE0] text-center">
               Acepto los términos y condiciones de uso.
@@ -120,30 +105,42 @@
             <form [formGroup]="userform">
               <div>
                 <p class="text-base">Identificador</p>
-                <input (keyup)="formatearRut()" formControlName="usuario"  type="text" placeholder="19xxxxxx-x" class="w-full border p-2 rounded-md" />
+                <input (keyup)="formatearRut()" formControlName="usuario" type="text" placeholder="19xxxxxx-x"
+                  class="w-full border p-2 rounded-md" />
               </div>
               <div>
                 <p class="text-base">Contraseña</p>
-                <input type="password" formControlName="clave" placeholder="*****" class="w-full border p-2 rounded-md" />
+                <input type="password" formControlName="clave" placeholder="*****"
+                  class="w-full border p-2 rounded-md" />
               </div>
             </form>
           </div>
 
           <!-- Botón ingresar -->
-          <button class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-md cursor-pointer" (click)="login()">
+          <button class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-md cursor-pointer"
+            (click)="login()">
             Ingresar
           </button>
 
           <p class="text-center mt-6 text-base font-semibold text-[#1A8BE0]">
             ¿Tiene dudas con el Portal Paciente?
           </p>
-          <p class="text-base text-center text-[#1A8BE0] mb-4">revise la sección de  <a class="text-black underline cursor-pointer">  preguntas frecuentes aquí</a></p>
+          <p class="text-base text-center text-[#1A8BE0] mb-4">revise la sección de <a
+              class="text-black underline cursor-pointer"> preguntas frecuentes aquí</a></p>
 
-          <p class="text-base text-center"><a class="text-black underline cursor-pointer">Leer términos y condiciones de uso aquí</a></p>
+          <p class="text-base text-center"><a class="text-black underline cursor-pointer">Leer términos y condiciones de
+              uso aquí</a></p>
 
           <p class="text-end mt-2 text-xs text-gray-500">
-            Versión 1.0.2
+            Versión 1.0.5
           </p>
+
+          <div class="mt-4 text-center border-t pt-4">
+            <a routerLink="/funcionarios"
+              class="text-sm text-gray-600 hover:text-[#0066B2] font-semibold cursor-pointer transition-colors">
+              Acceso Funcionarios
+            </a>
+          </div>
 
         </div>
       </div>
