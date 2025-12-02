@@ -88,7 +88,6 @@
                         <p-table #dt [value]="listaSolicitudFiltro" selectionMode="single"
                             [style]="{'table-layout': 'auto', 'height': '100%'}" [scrollable]="true" scrollHeight="flex"
                             class="flex flex-col h-full">
-                            <!-- Encabezados -->
                             <ng-template pTemplate="header">
                                 <tr class="">
                                     <th class="text-center border-b p-4">Identificador</th>
@@ -100,7 +99,6 @@
                                 </tr>
                             </ng-template>
 
-                            <!-- Cuerpo -->
                             <ng-template pTemplate="body" let-rowData>
                                 <tr class="border-b text-black text-base">
                                     <td class="text-center border-r">{{ rowData.identificador }}</td>
@@ -184,7 +182,6 @@
                         <p-table #dt [value]="listaRetroalimentacionFiltro" selectionMode="single"
                             [style]="{'table-layout': 'auto', 'height': '100%'}" [scrollable]="true" scrollHeight="flex"
                             class="flex flex-col h-full">
-                            <!-- Encabezados -->
                             <ng-template pTemplate="header">
                                 <tr class="">
                                     <th class="text-center border-b p-4">Identificador Emisor</th>
@@ -195,13 +192,12 @@
                                 </tr>
                             </ng-template>
 
-                            <!-- Cuerpo -->
                             <ng-template pTemplate="body" let-rowData>
                                 <tr class="border-b text-black">
                                     <td class="text-center border-r">{{ rowData.identificador_emisor }}</td>
                                     <td class="text-center border-r">{{ rowData.identificador_afectado }}</td>
                                     <td class="text-center border-r">{{ rowData.fecha_solicitud }}</td>
-                                    <td class="text-center border-r">{{ rowData.glosa_tipo_retroalinebtacion }}</td>
+                                    <td class="text-center border-r">{{ rowData.glosa_tipo_retroalimentacion }}</td>
                                     <td class="text-center px-4" (click)="verDetalleRetroalimentacion(rowData)">
                                         <button class="cursor-pointer mr-2" pTooltip=" - Portal Paciente - "
                                             tooltipPosition="top">
@@ -264,7 +260,7 @@
 
                     <div class="mb-3">
                         <label class="text-base font-semibold mt-1">Detalle de Solicitud</label>
-                        <textarea [autoResize]="false" [(ngModel)]="detalleSolicitud.detalle_solicitud" readonly
+                        <textarea [autoResize]="false" [(ngModel)]="detalleSolicitud.observacion" readonly
                             pInputTextarea rows="5" cols="30" placeholder="Escribe aquí..."
                             class="border p-1 rounded-md bg-gray-200 cursor-not-allowed w-full"></textarea>
                     </div>

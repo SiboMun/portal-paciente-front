@@ -7,10 +7,10 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { format }  from 'rut.js';
-import Swal from 'sweetalert2'
+import { format } from 'rut.js';
+import Swal from 'sweetalert2';
 
-
+import { PortalService } from '../../services/portal.service'; 
 
 @Component({
   selector: 'app-administrador-page',
@@ -22,6 +22,7 @@ import Swal from 'sweetalert2'
 export class AdministradorPageComponent implements OnInit {
 
   persona: any = null;
+
   open1 = true;
   open2 = false;
   open3 = false;
@@ -30,53 +31,55 @@ export class AdministradorPageComponent implements OnInit {
 
   userform!: FormGroup;
 
-  constructor(private router: Router,
-    private fb: FormBuilder,
-  ) {}
-
-
-  listaPacientesTotal = [
-    {
-      identificador: "16713155-7",
-      nombre: "SIBONEY MUÑOZ CONTRERAS",
-      prevision: "FONASA B",
-      sexo: "FEMENINO",
-      fecha_nacimiento: "23/04/19xx",
-      pais: "CHILE",
-      prais: "NO",
-      ultima_atencion: "15/10/2025",
-      numero_ficha: "123456"
-    },
-    {
-      identificador: "16939341-9",
-      nombre: "FERNANDO LOPEZ RIVEROS",
-      prevision: "FONASA A",
-      sexo: "MASCULINO",
-      fecha_nacimiento: "01/11/1972",
-      pais: "CHILE",
-      prais: "NO",
-      ultima_atencion: "11/02/2025",
-      numero_ficha: "987654"
-    }
-  ];
-  
+  listaPacientesTotal: any[] = []; 
   listaPacientesFiltro: any[] = [];
 
+  loading = false;
 
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private portalService: PortalService 
+  ) { }
 
   ngOnInit(): void {
     if (typeof window !== 'undefined' && localStorage) {
       const stored = localStorage.getItem('persona');
-
       if (stored) {
         this.persona = JSON.parse(stored);
       }
     }
 
     this.userform = this.fb.group({
-      'identificador': new FormControl('', Validators.required),
-      'nombre': new FormControl('', Validators.required),
-      'numero_ficha': new FormControl('', Validators.required)
+      identificador: new FormControl('', Validators.required),
+      nombre: new FormControl('', Validators.required),
+      numero_ficha: new FormControl('', Validators.required)
+    });
+
+    this.cargarPacientes(); 
+  }
+
+  cargarPacientes() {
+    this.loading = true;
+
+    this.portalService.getPacientesTotal().subscribe({
+      next: (data) => {
+        console.log("Pacientes recibidos:", data);
+        this.listaPacientesTotal = data;
+        this.listaPacientesFiltro = [];
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error("Error cargando pacientes:", err);
+
+        Swal.fire({
+          title: "Error al cargar pacientes",
+          text: "No se pudieron obtener los datos desde el servidor.",
+          icon: "error",
+        });
+
+        this.loading = false;
+      }
     });
   }
 
@@ -107,7 +110,7 @@ export class AdministradorPageComponent implements OnInit {
       cancelButtonText: "Cancelar"
     }).then((result) => {
       if (result.isConfirmed) {
-        localStorage.clear();      // Limpia token + datos del usuario
+        localStorage.clear();
         this.router.navigate(['/login']);
       }
     });
@@ -119,7 +122,6 @@ export class AdministradorPageComponent implements OnInit {
     let numero_ficha = data.value.numero_ficha?.trim().toLowerCase();
 
     this.listaPacientesFiltro = this.listaPacientesTotal.filter((p) => {
-
       const matchIdentificador =
         !identificador || p.identificador.toLowerCase().includes(identificador);
 
@@ -133,18 +135,17 @@ export class AdministradorPageComponent implements OnInit {
     });
   }
 
-  limpiar(){
+  limpiar() {
     this.listaPacientesFiltro = [];
     this.userform.patchValue({
-        identificador: '',
-        nombre: '',
-        numero_ficha: ''
+      identificador: '',
+      nombre: '',
+      numero_ficha: ''
     });
   }
 
-  formatearRut(){   
-    if(this.userform.value.identificador != '')
-    {
+  formatearRut() {
+    if (this.userform.value.identificador != '') {
       this.userform.patchValue({
         identificador: format(this.userform.value.identificador).replace(/\./gi, '')
       });
@@ -157,5 +158,4 @@ export class AdministradorPageComponent implements OnInit {
       { state: { identificador } }
     );
   }
-
 }

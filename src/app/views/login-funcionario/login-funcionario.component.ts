@@ -48,7 +48,7 @@ export class LoginFuncionarioComponent {
 
     }
 
-    perfilSeleccionado: number = 2; // Por defecto OIRS (2)
+    perfilSeleccionado: number = 2;
 
     seleccionarPerfil(id: number) {
         this.perfilSeleccionado = id;
@@ -81,7 +81,6 @@ export class LoginFuncionarioComponent {
                 next: (resp: any) => {
                     if (resp.ok) {
 
-                        // Validar que el usuario tenga el perfil seleccionado
                         if (resp.personal.id_perfil != this.perfilSeleccionado) {
                             Swal.fire({
                                 toast: true,

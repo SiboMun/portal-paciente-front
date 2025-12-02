@@ -20,9 +20,16 @@ export class AuthGuard implements CanActivate {
       const idPerfil = persona.id_perfil;
       const expectedRoles = route.data['expectedRoles'] as number[];
 
+      // 🟢 ADMIN siempre puede pasar a cualquier ruta
+      if (idPerfil === 1) {
+        return true;
+      }
+
       if (expectedRoles) {
-        // -1 represents "Patient" (any profile other than 1 or 2)
-        const isPatient = !expectedRoles.includes(1) && !expectedRoles.includes(2) && expectedRoles.includes(-1);
+        // -1 = paciente
+        const isPatient = !expectedRoles.includes(1) &&
+          !expectedRoles.includes(2) &&
+          expectedRoles.includes(-1);
 
         if (isPatient) {
           if (idPerfil !== 1 && idPerfil !== 2) {
@@ -33,16 +40,14 @@ export class AuthGuard implements CanActivate {
             return true;
           }
         }
-        console.log('idPerfil, ', idPerfil);
 
-        // Redirect based on actual profile if access is denied
-        if (idPerfil === 1) {
-          this.router.navigate(['/administrador']);
-        } else if (idPerfil === 2) {
+        // Si falla, redirigir según perfil
+        if (idPerfil === 2) {
           this.router.navigate(['/oirs']);
         } else {
           this.router.navigate(['/portal-paciente']);
         }
+
         return false;
       }
     }
